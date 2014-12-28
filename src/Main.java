@@ -54,6 +54,7 @@ public class Main extends javax.swing.JFrame {
       browseGameDataLocationButton = new javax.swing.JButton();
       statusScrollPane = new javax.swing.JScrollPane();
       statusArea = new javax.swing.JTextArea();
+      patchProgressBar = new javax.swing.JProgressBar();
 
       setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,31 +108,36 @@ public class Main extends javax.swing.JFrame {
       layout.setHorizontalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
          .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-               .addComponent(statusScrollPane)
                .addGroup(layout.createSequentialGroup()
+                  .addContainerGap()
                   .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                     .addComponent(statusScrollPane)
                      .addGroup(layout.createSequentialGroup()
-                        .addComponent(patchArchiveLocationLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                           .addComponent(patchArchiveLocationField)
-                           .addComponent(gameDataLocationField))))
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                     .addComponent(browsePatchArchiveLocationButton)
-                     .addComponent(browseGameDataLocationButton, javax.swing.GroupLayout.Alignment.TRAILING)))
+                           .addGroup(layout.createSequentialGroup()
+                              .addComponent(patchArchiveLocationLabel)
+                              .addGap(0, 0, Short.MAX_VALUE))
+                           .addGroup(layout.createSequentialGroup()
+                              .addGap(10, 10, 10)
+                              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                 .addComponent(patchArchiveLocationField)
+                                 .addComponent(gameDataLocationField))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                           .addComponent(browsePatchArchiveLocationButton)
+                           .addComponent(browseGameDataLocationButton, javax.swing.GroupLayout.Alignment.TRAILING)))
+                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(rootGameDataFolderLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))))
                .addGroup(layout.createSequentialGroup()
-                  .addComponent(rootGameDataFolderLabel)
-                  .addGap(0, 0, Short.MAX_VALUE)))
+                  .addGap(205, 205, 205)
+                  .addComponent(patchGameButton)
+                  .addGap(0, 196, Short.MAX_VALUE))
+               .addGroup(layout.createSequentialGroup()
+                  .addContainerGap()
+                  .addComponent(patchProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addContainerGap())
-         .addGroup(layout.createSequentialGroup()
-            .addGap(205, 205, 205)
-            .addComponent(patchGameButton)
-            .addContainerGap(206, Short.MAX_VALUE))
       );
       layout.setVerticalGroup(
          layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,8 +156,10 @@ public class Main extends javax.swing.JFrame {
                .addComponent(browseGameDataLocationButton))
             .addGap(18, 18, 18)
             .addComponent(patchGameButton)
+            .addGap(18, 18, 18)
+            .addComponent(patchProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(statusScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+            .addComponent(statusScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
             .addContainerGap())
       );
 
@@ -266,7 +274,7 @@ public class Main extends javax.swing.JFrame {
                   @Override
                   public void run()
                   {
-                     Worker.patchGame(patchArchive, baseDirectory, statusArea);
+                     Worker.patchGame(patchArchive, baseDirectory, statusArea, patchProgressBar);
                   }
                });
                
@@ -300,6 +308,7 @@ public class Main extends javax.swing.JFrame {
    private javax.swing.JTextField patchArchiveLocationField;
    private javax.swing.JLabel patchArchiveLocationLabel;
    private javax.swing.JButton patchGameButton;
+   private javax.swing.JProgressBar patchProgressBar;
    private javax.swing.JLabel rootGameDataFolderLabel;
    private javax.swing.JTextArea statusArea;
    private javax.swing.JScrollPane statusScrollPane;

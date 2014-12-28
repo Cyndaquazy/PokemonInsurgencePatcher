@@ -14,6 +14,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 
 /*
@@ -69,7 +70,7 @@ public class Worker {
       
    }
    
-   public static void patchGame(ZipFile archive, File baseDir, JTextArea output)
+   public static void patchGame(ZipFile archive, File baseDir, JTextArea output, JProgressBar progBar)
    {
       PrintStream log = new PrintStream(new TextAreaOutputStream(output));
       
@@ -82,22 +83,31 @@ public class Worker {
       
       HashMap<ZipEntry, String> filesToCopy = discoverFiles(archive, log);
       
+      progBar.setMaximum(filesToCopy.size());
+      
       log.println();
       
       log.println("[Copying files]");
       
+      boolean errorOccurred = false;
+      
       try
       {
-         copyFiles(archive, filesToCopy, baseDir, log);
+         copyFiles(archive, filesToCopy, baseDir, log, progBar);
       }
       catch (IOException ioEx)
       {
          JOptionPane.showMessageDialog(null, "Could not copy a file; aborting. " + ioEx.getMessage(), "I/O Exception", JOptionPane.ERROR_MESSAGE);
+         errorOccurred = true;
       }
       catch (SecurityException secEx)
       {
          JOptionPane.showMessageDialog(null, "You do not have proper permission to write to the destination directory. Contact system administrator.", "Security Exception", JOptionPane.ERROR_MESSAGE);
+         errorOccurred = true;
       }
+      
+      log.println();
+      log.println("[ Patch " + (errorOccurred? "Failed" : "Succeeded") + " ]");
    }
    
    private static HashMap<ZipEntry, String> discoverFiles(ZipFile archive, PrintStream log)
@@ -114,12 +124,23 @@ public class Worker {
          
          if (isErroneousFile(entryPath)) { continue; }
          
-         String[] directory = entry.getName().split("/");
+         System.out.println(entryPath);
+         
+         String[] directory = entryPath.split("/");
          String fileName = directory[directory.length-1];
          
-         if (directory.length == 3)
+         if (directory.length > 2)
          {
-            relativePath += (directory[1].substring(10).replace(":", "/")) + "/";
+            if (directory[1].contains("Copy into"))
+            {
+               relativePath += (directory[1].substring(10).replace(":", "/")) + "/";
+            }
+            else
+            {
+               int firstSlash = entryPath.indexOf('/');
+               int lastSlash = entryPath.lastIndexOf('/');
+               relativePath = entryPath.substring(firstSlash, lastSlash+1);
+            }
          }
          
          log.print("  Discovered " + fileName + " for " + relativePath);
@@ -133,10 +154,11 @@ public class Worker {
       return directoryStruct;
    }
    
-   private static void copyFiles(ZipFile archive, HashMap<ZipEntry, String> fileDirectoryMap, File baseDir, PrintStream log)
+   private static void copyFiles(ZipFile archive, HashMap<ZipEntry, String> fileDirectoryMap, File baseDir, PrintStream log, JProgressBar progBar)
            throws IOException
    {
       Set<ZipEntry> files = fileDirectoryMap.keySet();
+      int numCopied = 0;
       
       for (ZipEntry file : files)
       {
@@ -188,6 +210,9 @@ public class Worker {
          {
             if (fileOut != null) { fileOut.close(); }
          }
+         
+         numCopied++;
+         progBar.setValue(numCopied);
       }
    }
    
