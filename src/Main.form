@@ -169,7 +169,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="[Pok&#xe9;mon Insurgence Patcher, v1.0]&#xa;Author: Myndert Papenhuyzen (/u/Cyndaquazy)&#xa;    &#xa;This program is not affliated with Suzerain or any of the&#xa;development staff of Pok&#xe9;mon Insurgence and is provided AS IS&#xa;with no expressed warranty; use at your own risk.&#xa;&#xa;-----&#xa;&#xa;"/>
+            <Property name="text" type="java.lang.String" value="[Pok&#xe9;mon Insurgence Patcher, v1.1]&#xa;Author: Myndert Papenhuyzen (/u/Cyndaquazy)&#xa;    &#xa;This program is not affliated with Suzerain or any of the&#xa;development staff of Pok&#xe9;mon Insurgence and is provided AS IS&#xa;with no expressed warranty; use at your own risk.&#xa;&#xa;-----&#xa;&#xa;"/>
           </Properties>
         </Component>
       </SubComponents>

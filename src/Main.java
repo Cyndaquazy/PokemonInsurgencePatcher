@@ -104,7 +104,7 @@ public class Main extends javax.swing.JFrame {
       statusArea.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
       statusArea.setForeground(new java.awt.Color(255, 255, 255));
       statusArea.setRows(5);
-      statusArea.setText("[Pokémon Insurgence Patcher, v1.0]\nAuthor: Myndert Papenhuyzen (/u/Cyndaquazy)\n    \nThis program is not affliated with Suzerain or any of the\ndevelopment staff of Pokémon Insurgence and is provided AS IS\nwith no expressed warranty; use at your own risk.\n\n-----\n\n");
+      statusArea.setText("[Pokémon Insurgence Patcher, v1.1]\nAuthor: Myndert Papenhuyzen (/u/Cyndaquazy)\n    \nThis program is not affliated with Suzerain or any of the\ndevelopment staff of Pokémon Insurgence and is provided AS IS\nwith no expressed warranty; use at your own risk.\n\n-----\n\n");
       statusScrollPane.setViewportView(statusArea);
 
       javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
